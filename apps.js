@@ -5,7 +5,7 @@
     angular.module('studentApp', [])
     .controller('StudentController', ['$scope', StudentController]);
 
-    function StudentController() {
+    function StudentController($scope) {
         $scope.newStudent = null;
         $scope.students = [];
 
@@ -13,11 +13,11 @@
             if ($scope.newStudent.id == null) {
                 uId = uId + 1;
                 $scope.newStudent.id = uId;
-                $scope.contacts.push($scope.newStudent);
+                $scope.students.push($scope.newStudent);
             } else {
                 for (var i in $scope.students) {
                     if ($scope.students[i].id == $scope.newStudent.id) {
-                        $scope.contacts[i] = $scope.newStudent;
+                        $scope.students[i] = $scope.newStudent;
                     }
                 }
             }
@@ -26,8 +26,17 @@
 
         $scope.edit = function(id) {
             for (var i in $scope.students) {
-                if ($scope.students[i],id == id) {
+                if ($scope.students[i].id == id) {
                     $scope.newStudent = angular.copy($scope.students[i])
+                }
+            }            
+        }
+
+        $scope.delete = function(id) {
+            for (var i in $scope.students) {
+                if ($scope.students[i].id == id) {
+                    $scope.students.splice(i,1);
+                    $scope.newStudent = {}
                 }
             }
         }
